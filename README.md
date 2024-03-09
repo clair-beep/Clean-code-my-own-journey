@@ -1,3 +1,12 @@
+## Table of Contents
+
+- [Clean-code-my-own-journey](#clean-code-my-own-journey)
+  - [What is this project?](#what-is-this-project)
+  - [Sources](#sources)
+  - [Introduction](#introduction)
+  - [Chapter 1](#chapter-1)
+  - [Chapter 2](#chapter-2)
+
 # Clean-code-my-own-journey
 
 Get the key ideas from Clean Code by Robert C. Martin
@@ -5,16 +14,6 @@ Get the key ideas from Clean Code by Robert C. Martin
 ## What is this project?
 
 I read the book and carefully went through the case studies in the second part, but I still had trouble grasping the concepts. To better understand, I decided to summarize each chapter, compare my understanding with others, and put myself in the author's shoes. By thinking along the same paths as the author, I was able to gain a richer understanding of the principles, patterns, practices, and heuristics.
-
-## Table of Contents
-
-- [Clean-code-my-own-journey](#clean-code-my-own-journey)
-  - [What is this project?](#what-is-this-project)
-  - [Table of Contents](#table-of-contents)
-  - [Sources](#sources)
-  - [Introduction](#introduction)
-  - [Chapter 1](#chapter-1)
-  - [Chapter 2](#chapter-2)
 
 ## Sources
 
