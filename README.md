@@ -8,9 +8,13 @@ I read the book and carefully went through the case studies in the second part, 
 
 ## Table of Contents
 
-1. [Sources](#sources)
-2. [Introduction](#introduction)
-3. [Chapter 1](#chapter 1)
+- [Clean-code-my-own-journey](#clean-code-my-own-journey)
+  - [What is this project?](#what-is-this-project)
+  - [Table of Contents](#table-of-contents)
+  - [Sources](#sources)
+  - [Introduction](#introduction)
+  - [Chapter 1](#chapter-1)
+  - [Chapter 2](#chapter-2)
 
 ## Sources
 
@@ -48,3 +52,104 @@ This chapter gives me hope, like a revelation to the following questions: Why do
 He breaks down the importance of clean, readable code, emphasizing that it's read way more than it's written. And hey, let's be real - we've all had that moment where we look at some code and go, "What on earth was I thinking when I wrote this?" Uncle Bob is basically saying, "Let's avoid those facepalm moments, shall we?"
 
 In a nutshell, Chapter 1 is all about the responsibility we carry as coders to make our code a joy to read, not a puzzle to solve. Because in the end, a well-written codebase is a work of art, and we're the artists shaping the future of tech. Cheers to clean code and the adventure it brings!
+
+## Chapter 2
+
+In this chapter, Martin explores the concept of naming, which is the foundation of clean code. He emphasizes that the names we choose for our variables, functions, classes, and modules should be clear, concise, and descriptive.
+
+Martin starts by discussing the importance of choosing good names. He argues that a good name is the first step in making your code understandable. It's the first thing a reader will see, and it sets the tone for the rest of the code. He points out that a good name can make the difference between a piece of code that is easy to understand and one that is a puzzle.
+
+One of the key points Martin makes is that names should be descriptive. He advises against using vague names like `a` or `DtaRcrd102` and instead encourages developers to use names that describe the purpose or the role of the variable or function. For example:
+
+**Bad:**
+
+```javascript
+getUserInfo();
+getClientData();
+getCustomerRecord();
+```
+
+**Good:**
+
+```javascript
+getUser();
+```
+
+Martin also talks about the importance of using names that reveal intent. He suggests that a good name should tell you why something is done, not just what is done. For example:
+
+**Bad:**
+
+```javascript
+let a = 50;
+```
+
+**Good:**
+
+```javascript
+let maxNumberOfItems = 50;
+```
+
+And let's not forget about readers shouldn't have to mentally translate names into what they mean. Be explicit and avoid ambiguity, for example:
+
+**Bad:**
+
+```javascript
+const fruits = ['apple', 'banana', 'orange'];
+fruits.forEach((f) => {
+  process();
+  transform();
+  // ...
+  // ...
+  // ...
+  // Wait, what does `f` stand for in this context?
+  analyze(f);
+});
+```
+
+**Good:**
+
+```javascript
+const fruits = ['apple', 'banana', 'orange'];
+fruits.forEach((fruit) => {
+  process();
+  transform();
+  // ...
+  // ...
+  // ...
+  analyze(fruit);
+});
+```
+
+The chapter also covers the concept of naming conventions. Martin discusses the importance of being consistent with naming conventions within a project. For example the built-in JavaScript libraries use the same naming conventions as Java. Data types and constructor functions use upper camel case (RegExp, TypeError, XMLHttpRequest, DOMObject) and methods use lower camel case (getElementById, getElementsByTagNameNS, createCDATASection). In order to be consistent most JavaScript developers follow these conventions
+
+Finally proper naming of variables, functions, and classes is very important. Class names should succinctly convey their purpose, avoiding unnecessary complexity or ambiguity.
+
+For method names, adopt a verb-centric approach. Methods represent actions or behaviors, so use verbs to clearly articulate what each method does.
+
+**Bad:**
+
+```javascript
+class AnimalProcessor {
+  handleData(animal) {
+    // ...
+  }
+}
+
+const processor = new AnimalProcessor();
+processor.handleData(myPet);
+```
+
+**Good:**
+
+```javascript
+class PetDatabase {
+  retrievePetData(pet) {
+    // ...
+  }
+}
+
+const database = new PetDatabase();
+database.retrievePetData(myPet);
+```
+
+The principles outlined here are not mere suggestions but rather a manifesto for the conscientious developer seeking to elevate their code to the realm of clean, readable, and maintainable software.
