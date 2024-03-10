@@ -6,6 +6,13 @@
   - [Introduction](#introduction)
   - [Chapter 1](#chapter-1)
   - [Chapter 2](#chapter-2)
+  - [Chapter 3](#chapter-3)
+    - [Function arguments (2 or fewer ideally)](#function-arguments-2-or-fewer-ideally)
+    - [Functions should do one thing](#functions-should-do-one-thing)
+    - [Function names should say what they do](#function-names-should-say-what-they-do)
+    - [Don't use flags as function parameters](#dont-use-flags-as-function-parameters)
+    - [Favor functional programming over imperative programming](#favor-functional-programming-over-imperative-programming)
+    - [Avoid conditionals](#avoid-conditionals)
 
 # Clean-code-my-own-journey
 
@@ -24,6 +31,8 @@ Software engineering principles, from Robert C. Martin's book
 [3Rs of Software Architecture](https://github.com/ryanmcdermott/3rs-of-software-architecture)
 
 clean-code-javascript from Ryan McDermott repository [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript)
+
+Naming convention (programming) [naming-convention-programing](<https://en.wikipedia.org/wiki/Naming_convention_(programming)>)
 
 ## Introduction
 
@@ -152,3 +161,227 @@ database.retrievePetData(myPet);
 ```
 
 The principles outlined here are not mere suggestions but rather a manifesto for the conscientious developer seeking to elevate their code to the realm of clean, readable, and maintainable software.
+
+## Chapter 3
+
+In Chapter 3 of "Clean Code" by Robert Martin, the author delves into the importance of functions and how they contribute to writing clean code. He's not a fan of those long, complex functions that resemble a tangled spaghetti mess. Instead, he encourages us to keep our functions short and sweet, with a clear and meaningful name. Picture your function like a newspaper article headline - it should convey the essence of what it does without requiring a PhD in code deciphering. Basiccaly advocating for functions to be brief, explaining their purpose clearly, and adhering to the Single Responsibility Principle.
+
+Central to Martin's message is the importance of choosing clear and meaningful names for functions. By doing so, code becomes self-documenting, providing a straightforward understanding of its functionality. Moreover, this aligns with the Single Responsibility Principle, promoting functions with well-defined purposes.
+
+Moving on to the principle of avoiding side effects, the chapter underscores the significance of functions that operate predictably without causing unintended changes in the system. By adhering to this guideline, code becomes more reliable, reducing the likelihood of hidden behaviors that can lead to confusion or bugs. Each function is encouraged to perform its designated task without introducing unexpected consequences.
+
+In essence, Chapter 3 serves as a rallying cry for developers to embrace concise, well-named functions, fostering a codebase that is not only functional but also a joy to work with.
+
+### Function arguments (2 or fewer ideally)
+
+**Bad:**
+
+```javascript
+// Bad Practice: Unclear and inconsistent function arguments
+function calculateTotal(price, quantity, discount, tax, shippingCost) {
+  // Function implementation
+  // ...
+}
+```
+
+**Good:**
+
+```javascript
+// Good Practice: Use an options object for clearer function arguments
+function calculateTotal(options) {
+    const {
+        price = 0,
+        quantity = 1,
+        discount = 0,
+        tax = 0,
+        shippingCost = 0
+    } = options;
+
+    // Function implementation
+    // ...
+
+    const total = /* calculate total based on options */;
+
+    return total;
+}
+
+```
+
+### Functions should do one thing
+
+**Bad:**
+
+```javascript
+// Bad Practice: Function doing multiple things
+function processUserData(user) {
+  // Validate user data
+  if (!user || !user.name || !user.email) {
+    console.error('Invalid user data');
+    return;
+  }
+
+  // Save user to the database
+  database.save(user);
+
+  // Send a welcome email
+  emailService.sendWelcomeEmail(user.email);
+}
+```
+
+**Good:**
+
+```javascript
+// Good Practice: Separate responsibilities into distinct functions
+function validateUserData(user) {
+  if (!user || !user.name || !user.email) {
+    console.error('Invalid user data');
+    return false;
+  }
+  return true;
+}
+
+function saveUserToDatabase(user) {
+  // Save user to the database
+  database.save(user);
+}
+
+function sendWelcomeEmail(email) {
+  // Send a welcome email
+  emailService.sendWelcomeEmail(email);
+}
+
+// Main function orchestrating the process
+function processUserData(user) {
+  if (validateUserData(user)) {
+    saveUserToDatabase(user);
+    sendWelcomeEmail(user.email);
+  }
+}
+```
+
+### Function names should say what they do
+
+**Bad:**
+
+```javascript
+// Bad Practice: Unclear function name
+function xyz(a, b) {
+  // Implementation details
+  // ...
+}
+```
+
+**Good:**
+
+```javascript
+// Good Practice: Descriptive function name
+function calculateSum(a, b) {
+  return a + b;
+}
+```
+
+### Don't use flags as function parameters
+
+**Bad:**
+
+```javascript
+// Bad Practice: Using a flag as a function parameter
+function fetchData(url, useCache) {
+  if (useCache) {
+    // Retrieve data from cache
+    return cache.get(url);
+  } else {
+    // Fetch data from the server
+    return server.fetch(url);
+  }
+}
+```
+
+**Good:**
+
+```javascript
+// Good Practice: Separate functions for different behaviors
+function fetchDataFromCache(url) {
+  return cache.get(url);
+}
+
+function fetchDataFromServer(url) {
+  return server.fetch(url);
+}
+```
+
+### Favor functional programming over imperative programming
+
+**Bad:**
+
+```javascript
+// Bad Practice: Imperative programming with mutability
+function calculateTotalPrice(cart) {
+  let totalPrice = 0;
+
+  for (let i = 0; i < cart.length; i++) {
+    const item = cart[i];
+    totalPrice += item.price * item.quantity;
+  }
+
+  return totalPrice;
+}
+```
+
+**Good:**
+
+```javascript
+// Good Practice: Functional programming with immutability
+function calculateTotalPrice(cart) {
+  return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+}
+```
+
+### Avoid conditionals
+
+**Bad:**
+
+```javascript
+class Airplane {
+  // ...
+  getCruisingAltitude() {
+    switch (this.type) {
+      case '777':
+        return this.getMaxAltitude() - this.getPassengerCount();
+      case 'Air Force One':
+        return this.getMaxAltitude();
+      case 'Cessna':
+        return this.getMaxAltitude() - this.getFuelExpenditure();
+    }
+  }
+}
+```
+
+**Good:**
+
+```javascript
+class Airplane {
+  // ...
+}
+
+class Boeing777 extends Airplane {
+  // ...
+  getCruisingAltitude() {
+    return this.getMaxAltitude() - this.getPassengerCount();
+  }
+}
+
+class AirForceOne extends Airplane {
+  // ...
+  getCruisingAltitude() {
+    return this.getMaxAltitude();
+  }
+}
+
+class Cessna extends Airplane {
+  // ...
+  getCruisingAltitude() {
+    return this.getMaxAltitude() - this.getFuelExpenditure();
+  }
+}
+```
