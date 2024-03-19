@@ -13,6 +13,7 @@
     - [Don't use flags as function parameters](#dont-use-flags-as-function-parameters)
     - [Favor functional programming over imperative programming](#favor-functional-programming-over-imperative-programming)
     - [Avoid conditionals](#avoid-conditionals)
+  - [Chapter 4](#chapter-4)
 
 # Clean-code-my-own-journey
 
@@ -385,3 +386,34 @@ class Cessna extends Airplane {
   }
 }
 ```
+
+## Chapter 4
+
+We're diving deep into the world of comments. Now, here's the deal: comments are like spices in cooking. Just a pinch can enhance the flavor, but too much can ruin the dish.
+
+First off, let's talk about why we need comments. They're not just there to fill up space; they serve a purposeJust as a chef carefully seasons a dish, Martin reminds us that comments should enhance, not overpower, the code. He emphasizes the importance of clarity and conciseness, urging developers to wield comments with precision, much like a skilled artisan crafting a masterpiece.
+
+Through a series of illustrative examples, Martin showcases the spectrum of comment craftsmanship, from the sublime to the downright confounding. Each case study serves as a lesson in communication, highlighting the transformative power of well-placed comments to elucidate the developer's intent.
+Moreover, Martin's narrative style invites readers to reconsider their approach to code documentation. He advocates for a strategic balance. Comments should provide context and insight, guiding the reader through the code without overshadowing its inherent elegance.
+
+Here are some key points from the book regarding comments:
+
+1. **Comments Should Be Necessary**: Martin advises against writing comments for the sake of having comments. Comments should provide valuable information that cannot be expressed through well-written code alone.
+
+2. **Explain Intent, Not Mechanics**: Comments should focus on explaining the intent behind the code, rather than reiterating what the code does mechanically. The code itself should be clear enough to understand the mechanics.
+
+3. **Avoid Redundant Comments**: Comments that simply repeat what the code already expresses are redundant and should be avoided. This includes comments that merely describe what a method or variable name already makes clear.
+
+4. **Keep Comments Updated**: If code changes, comments should be updated accordingly. Stale comments can mislead readers and lead to confusion.
+
+5. **Prefer Self-Documenting Code**: Strive to write code that is self-explanatory and doesn't require extensive commenting to be understood. Clear and descriptive names for variables, methods, and classes can go a long way in making the code more readable.
+
+6. **Explain "Why", Not "What"**: Comments should focus on explaining why certain decisions were made or why the code behaves a certain way, rather than describing what the code does.
+
+7. **Use Comments to Clarify Complex Logic**: Comments can be valuable for explaining complex algorithms or business rules that might not be immediately obvious from the code itself.
+
+8. **Be Mindful of Formatting**: Comments should be properly formatted and aligned with the code they describe.
+
+9. **Avoid Obsolete Comments**: Comments that no longer apply to the current state of the code should be removed.
+
+10. **Consider Documentation Tools**: For documenting APIs or larger systems, consider using documentation tools like Swagger.
