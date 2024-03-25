@@ -14,6 +14,8 @@
     - [Favor functional programming over imperative programming](#favor-functional-programming-over-imperative-programming)
     - [Avoid conditionals](#avoid-conditionals)
   - [Chapter 4](#chapter-4)
+  - [Chapter 5](#chapter-5)
+  - [Chapter 6](#chapter-6)
 
 # Clean-code-my-own-journey
 
@@ -417,3 +419,157 @@ Here are some key points from the book regarding comments:
 9. **Avoid Obsolete Comments**: Comments that no longer apply to the current state of the code should be removed.
 
 10. **Consider Documentation Tools**: For documenting APIs or larger systems, consider using documentation tools like Swagger.
+
+## Chapter 5
+
+## Chapter 6
+
+The discussion begins with Martin talking about data abstractions, which are vital for managing complexity in software. He highlights how objects conceal their data behind abstractions and provide functions that operate on that data, making it easier to maintain a clean and adaptable codebase.
+
+He also raises concerns about exposing internal data structures directly, calling them "data structures with functions tacked on." This approach goes against the principle of information hiding and can lead to messy, tightly coupled code.
+
+To address this issue, he recommends using data structures as data containers, which can be kept hidden within well-defined interfaces. This approach allows for manipulation of the data without revealing its internal structure, leading to increased flexibility and maintainability.
+
+He acknowledges that there is often a tension between objects and data structures, and he believes that finding the right balance between the two is crucial. He emphasizes that object-oriented code focuses on objects managing their own data, while procedural code operates on data that is exposed.
+
+The author stresses the importance of creating clean interfaces that abstract away implementation details to avoid confusion and make code more adaptable and maintainable. He believes that a balanced approach to using objects and data structures can lead to a flexible and efficient codebase.
+
+Through the application of clean code principles to these components, we enhance the readability, maintainability, and flexibility of our codebase. In this chapter, we delved into practices such as encapsulating data, steering clear of getter and setter methods, prioritizing composition over inheritance, reducing mutable state, and upholding the Single Responsibility Principle (SRP). By embracing these guidelines and tailoring them to our project's needs, we foster the creation of cleaner and more resilient code.
+
+**Encapsulating Data:**
+
+```javascript
+
+class Car {
+  private brand: string;
+  private model: string;
+
+  constructor(brand: string, model: string) {
+    this.brand = brand;
+    this.model = model;
+  }
+
+  public getBrand(): string {
+    return this.brand;
+  }
+
+  public getModel(): string {
+    return this.model;
+  }
+}
+
+```
+
+**Avoiding Getter and Setter Methods:**
+
+```javascript
+
+class Rectangle {
+  private width: number;
+  private height: number;
+
+  constructor(width: number, height: number) {
+    this.width = width;
+    this.height = height;
+  }
+
+  public get area(): number {
+    return this.width * this.height;
+  }
+
+  public setDimensions(width: number, height: number): void {
+    this.width = width;
+    this.height = height;
+  }
+}
+
+```
+
+**Favoring Composition over Inheritance:**
+
+```javascript
+
+class Engine {
+  public start(): void {
+    console.log('Engine started');
+  }
+}
+
+class Car {
+  private engine: Engine;
+
+  constructor() {
+    this.engine = new Engine();
+  }
+
+  public startEngine(): void {
+    this.engine.start();
+  }
+}
+
+```
+
+**Minimizing Mutable State:**
+
+```javascript
+function calculateTotalPrice(prices) {
+  let totalPrice = 0;
+
+  for (const price of prices) {
+    totalPrice += price;
+  }
+
+  return totalPrice;
+}
+
+const prices = [10, 20, 30, 40];
+const total = calculateTotalPrice(prices);
+```
+
+**Minimizing Mutable State:**
+
+```javascript
+function calculateTotalPrice(prices) {
+  let totalPrice = 0;
+
+  for (const price of prices) {
+    totalPrice += price;
+  }
+
+  return totalPrice;
+}
+
+const prices = [10, 20, 30, 40];
+const total = calculateTotalPrice(prices);
+```
+
+**Following the Single Responsibility Principle (SRP):**
+
+```javascript
+
+class Logger {
+  public logError(message: string): void {
+    // Log the error message to a file or console
+  }
+
+  public logMetric(metric: string, value: number): void {
+    // Log the metric and its value to a monitoring system
+  }
+}
+
+class PaymentProcessor {
+  private logger: Logger;
+
+  constructor(logger: Logger) {
+    this.logger = logger;
+  }
+
+  public processPayment(amount: number): void {
+    try {
+      // Process the payment logic
+    } catch (error) {
+      this.logger.logError('Payment processing failed');
+    }
+  }
+}
+```
