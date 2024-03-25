@@ -526,23 +526,6 @@ const prices = [10, 20, 30, 40];
 const total = calculateTotalPrice(prices);
 ```
 
-**Minimizing Mutable State:**
-
-```javascript
-function calculateTotalPrice(prices) {
-  let totalPrice = 0;
-
-  for (const price of prices) {
-    totalPrice += price;
-  }
-
-  return totalPrice;
-}
-
-const prices = [10, 20, 30, 40];
-const total = calculateTotalPrice(prices);
-```
-
 **Following the Single Responsibility Principle (SRP):**
 
 ```javascript
