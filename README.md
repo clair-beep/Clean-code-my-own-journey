@@ -37,6 +37,8 @@ clean-code-javascript from Ryan McDermott repository [clean-code-javascript](htt
 
 Naming convention (programming) [naming-convention-programing](<https://en.wikipedia.org/wiki/Naming_convention_(programming)>)
 
+Clean Code: Objects and Data Structures [clean-code-objects-and-data-structures](https://medium.com/@himanshuganglani/clean-code-objects-and-data-structures-95f7265762dc)
+
 ## Introduction
 
 Learning to write clean code is hard work. It requires more than just the knowledge of
