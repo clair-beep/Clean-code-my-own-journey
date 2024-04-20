@@ -37,7 +37,8 @@ clean-code-javascript from Ryan McDermott repository [clean-code-javascript](htt
 
 Naming convention (programming) [naming-convention-programing](<https://en.wikipedia.org/wiki/Naming_convention_(programming)>)
 
-Clean Code: Objects and Data Structures [clean-code-objects-and-data-structures](https://medium.com/@himanshuganglani/clean-code-objects-and-data-structures-95f7265762dc)
+Clean Code: Formatting (Source code structure)
+[clean-code-formatting](https://medium.com/nerd-for-tech/clean-code-formatting-source-code-structure-f3021575d79)
 
 ## Introduction
 
@@ -423,6 +424,99 @@ Here are some key points from the book regarding comments:
 10. **Consider Documentation Tools**: For documenting APIs or larger systems, consider using documentation tools like Swagger.
 
 ## Chapter 5
+
+In this chapter we're diving deep into the art of formatting, where every space, every indentation, and every line break matters mode than one would like to think.
+
+> First of all, let's be clear. Code formatting is important. It is too important to ignore and it is too important to treat religiously. Code formatting is about communication, and communication is the professional developer-s first order of business.
+>
+> — Robert Cecil Martin
+
+1. **Separate concepts vertically:** horizontal space is also possible but, keep in mind that horizontal and verical space contribute -- as much as silence in music -- to add structure and to communicate intent. The visual structure helpos to browser quicker through large chuncks of code.
+   public function getName() {return 'webauthn';}
+
+**Good:**
+
+```javascript
+let num = 1;
+let value = 2;
+```
+
+**Bad:**
+
+<!-- prettier-ignore -->
+```javascript
+let num    = 1;
+let value  = 2;
+
+```
+
+2. **Density:** Code that is tightly related should appear vertically dense. Using space between different concepts can help separate them.
+
+**Good:**
+
+```javascript
+public class PropertyConfig {
+  private String m_className;
+  private List<Property> m_properties = new ArrayList<Property>();public void addProperty(Property property) {
+  m_properties.add(property);
+}
+```
+
+**Bad:**
+
+<!-- prettier-ignore -->
+```javascript
+public class PropertyConfig {  /**
+  * The class name of the reporter listener */private String m_className;  /**
+  * The properties of the reporter listener */private List<Property> m_properties = new ArrayList<Property>();  public void addProperty(Property property) {
+    m_properties.add(property);}
+```
+
+3. **Distance:** concepts that are closely related should be kept vertically close to each other. However, this rule does not apply to different files.
+
+4. **Variable declaration:** variables should be declared as close to their usage as possible.
+
+5. **Dependent functions should be grouped together:** with the child's function preferred for the function name. This helps to read the code quickly without navigating too far around various places within the code.
+
+6. **Similar functions should be close by:** Code bits that are conceptually related tend to get close to other bits. The more affinity there is between them, the less vertical space required.
+
+**Good:**
+
+```javascript
+public class Assert { static public void assertTrue(String message, boolean condition) {
+   if (!condition) fail(message);
+}static public void assertTrue(boolean condition) {
+  assertTrue(null, condition);
+}static public void assertFalse(String message, boolean condition) {
+  assertTrue(message, !condition);
+}static public void assertFalse(boolean condition) {
+  assertFalse(null, condition);
+}
+```
+
+7. **From top to bottom:** Function call dependencies should point in the downward direction. A function that is called should be below a function that does the calling. This creates a nice flow down the source code. As in newspaper articles, the most important concepts should come first, expressed with the least amount of polluting detail.
+8. **Don't break indentation.** It is essential to respect a regular indentation in all your code, even if you want to break this standard occasionally. Following this rule makes it easy to detect the actions done by a FOR or IF clause, etc.
+
+**Good:**
+
+<!-- prettier-ignore -->
+```javascript
+const loop = ()=>{if(true){for(let x of [1,2,3]){console.log(x)}}};
+```
+
+**Bad:**
+
+```javascript
+const loop = () => {
+  if (true) {
+    for (let x of [1, 2, 3]) {
+      console.log(x);
+    }
+  }
+};
+```
+
+In conclusion, code formatting is crucial for communication, and it should be viewed as such. Following the above principles can help you create clean, readable, and maintainable code.
 
 ## Chapter 6
 
