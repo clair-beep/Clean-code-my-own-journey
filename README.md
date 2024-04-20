@@ -16,6 +16,7 @@
   - [Chapter 4](#chapter-4)
   - [Chapter 5](#chapter-5)
   - [Chapter 6](#chapter-6)
+  - [Chapter 7](#chapter-7)
 
 # Clean-code-my-own-journey
 
@@ -652,3 +653,80 @@ class PaymentProcessor {
   }
 }
 ```
+
+## Chapter 7
+
+In this chapter the author emphasizes that good error handling is what separates professional software developers from amateurs.
+
+> Error handling is important, but if it obscures logic, it's wrong.
+>
+> — Robert Cecil Martin
+
+**Exceptions**
+When a function encounters an obstacle, the ideal response is to halt the current operation and return to a designated location that can manage the issue. Merely logging errors to the console with console.log isn't significantly improved, as these messages can easily become lost among the multitude of outputs to the console. When you enclose a portion of code in a try/catch block, it signifies that you anticipate a potential error at that point. This is the purpose of exception handling.
+
+Exceptions serve as a tool for code to signal a problem by "raising" or "throwing" an exception, essentially a specific value. Raising an exception is akin to a powerful version of returning from a function: it exits not only the current function but also its parent functions, all the way up to the initial call that initiated the current execution.
+
+**Good:**
+
+```javascript
+try {
+  functionThatMightThrow();
+} catch (error) {
+  console.log(error);
+}
+```
+
+**Bad:**
+
+```javascript
+try {
+  functionThatMightThrow();
+} catch (error) {
+  // One option (more noisy than console.log):
+  console.error(error);
+  // Another option:
+  notifyUserOfError(error);
+  // Another option:
+  reportErrorToService(error);
+  // OR do all three!
+}
+```
+
+**Don't forget rejected promises**
+For the same reason you shouldn't ignore caught errors from try/catch.
+
+**Bad:**
+
+```javascript
+getdata()
+  .then(data => {
+    functionThatMightThrow(data);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+}
+```
+
+**Good:**
+
+```javascript
+getdata()
+  .then((data) => {
+    functionThatMightThrow(data);
+  })
+  .catch((error) => {
+    // One option (more noisy than console.log):
+    console.error(error);
+    // Another option:
+    notifyUserOfError(error);
+    // Another option:
+    reportErrorToService(error);
+    // OR do all three!
+  });
+```
+
+Mistakes and bad input are facts of life. Bugs in programs need to be found and fixed. They can become easier to notice by having automated test suites and adding assertions to your programs.
+
+Problems caused by factors outside the program’s control should usually be handled gracefully. Sometimes, when the problem can be handled locally, special return values are a sane way to track them. Otherwise, exceptions are preferable.
