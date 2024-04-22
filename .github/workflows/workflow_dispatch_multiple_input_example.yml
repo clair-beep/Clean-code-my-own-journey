@@ -19,8 +19,4 @@ jobs:
     steps:
       - run: echo "Deploy to ${{ github.event.inputs.environment}} environment "
 
-  notify:
-    runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.notify}}
-    steps:
-      - run: echo "Deployed to ${{ github.event.inputs.environment}}"
+      
