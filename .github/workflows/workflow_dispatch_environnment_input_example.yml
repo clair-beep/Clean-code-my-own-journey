@@ -1,4 +1,4 @@
-name: Workflow Dispatch Freeform Input Example
+name: Workflow Dispatch Environment Input Example
 
 on:
   workflow_dispatch:
