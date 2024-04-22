@@ -1,5 +1,5 @@
 name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions and deploy to ${{ inputs.deploy_target}}
+run-name: ${{ github.actor }} is learning GitHub Actions
 on: [push]
 jobs:
   check-bats-version:
@@ -11,3 +11,7 @@ jobs:
           node-version: '20'
       - run: npm install -g bats
       - run: bats -v
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deployed to ${{ github.event.created}}"
