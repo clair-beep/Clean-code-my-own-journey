@@ -20,6 +20,9 @@
   - [Chapter 8](#chapter-8)
     - [Using third party code](#using-third-party-code)
   - [Chapter 9](#chapter-9)
+    - [The Three Rules of TDD](#the-three-rules-of-tdd)
+    - [Clean tests](#clean-tests)
+    - [F.I.R.S.T.](#first)
 
 # Clean-code-my-own-journey
 
@@ -755,3 +758,36 @@ It's a good practice to wrap third-party APIs, and only use your wrapper, this w
 
 ## Chapter 9
 
+In this chapter, we will be discussing the significance of unit testing in maintaining code quality. Writing clean and effective unit tests is crucial as it helps in identifying bugs and issues early on, and also improves the maintainability and reliability of the codebase.
+
+### The Three Rules of TDD
+
+There are three rules that should be followed while using Test Driven Development (TDD): 
+
+1. Write production code only to pass a failing unit test.
+2. Write no more of a unit test than what is required to fail. Compilation failures are considered failures as well.
+3. Write no more production code than necessary to pass the one failing unit test.
+
+### Clean tests
+
+When writing tests, it is essential to describe the feature and test case in a simple and clear way. Tests usually require a setup prior to invoking, and an expected result for the assertion. However, this can make the test code long, not clear, and full of details, which can make it hard to read and maintain.
+
+We also want our tests to be isolated so that there are no dependencies between the tests. One test should not affect the outcome of another test.
+
+Key principles for keeping tests clean include:
+
+1. Readability: Tests should be easy to read and understand, acting as documentation for both current and future developers.
+2. Expressiveness: Tests should clearly convey the intent of the code being tested, using descriptive names and well-structured assertions.
+3. Maintainability: Tests should be written with maintainability in mind, allowing for easy modifications and updates as the code evolves.
+4. Minimize Test Data: Tests should use minimal test data to focus on the essential behavior being tested.
+
+
+### F.I.R.S.T.
+
+Clean tests follow five rules that together form the above acronym:
+
+1. Fast: Tests should be fast to encourage frequent execution.
+2. Independent: Tests should not depend on each other.
+3. Repeatable: Tests should produce the same result every time they are run.
+4. Self-Validating: Tests should either pass or fail clearly, without human interpretation.
+5. Timely: Tests should be written before the production code and should be run frequently.
