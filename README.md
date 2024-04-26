@@ -17,6 +17,9 @@
   - [Chapter 5](#chapter-5)
   - [Chapter 6](#chapter-6)
   - [Chapter 7](#chapter-7)
+  - [Chapter 8](#chapter-8)
+    - [Using third party code](#using-third-party-code)
+  - [Chapter 9](#chapter-9)
 
 # Clean-code-my-own-journey
 
@@ -730,3 +733,25 @@ getdata()
 Mistakes and bad input are facts of life. Bugs in programs need to be found and fixed. They can become easier to notice by having automated test suites and adding assertions to your programs.
 
 Problems caused by factors outside the program’s control should usually be handled gracefully. Sometimes, when the problem can be handled locally, special return values are a sane way to track them. Otherwise, exceptions are preferable.
+
+## Chapter 8
+
+Here the discussion is about the different ways to keep the boundaries of our code clean. Where Boundaries are the interfaces where diffferent parts of asystem interactL: external system libraries or databases. 
+
+### Using third party code
+We don't want to have third-party APIs referenced everywhere in our application because if the APIs change; you have to modify code everywhere it's referenced.
+The best way to get to know an api is writting test this allows you to:
+
+- Document how you intend to use the library
+- Test-Driven Development (TDD): Writing tests for third-party APIs documents their usage and aids in detecting breaking changes during dependency upgrades.
+- Easily catch breaking changes in the library when you upgrade dependencies
+
+It's a good practice to wrap third-party APIs, and only use your wrapper, this way:
+
+- Create your own interface
+- Simplify mocking in tests by interacting only with the custom wrapper, enhancing testability and flexibility.
+- Easily adapt to changes in the third-party library's API
+- Mitigating Development Bottlenecks: Frontend developers can proceed independently, unblocked by backend API development, by utilizing wrapper interfaces.
+
+## Chapter 9
+
