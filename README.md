@@ -3,6 +3,9 @@
 - [Clean-code-my-own-journey](#clean-code-my-own-journey)
   - [What is this project?](#what-is-this-project)
   - [Sources](#sources)
+    - [Books](#books)
+    - [Websites](#websites)
+    - [Videos](#videos)
   - [Introduction](#introduction)
   - [Chapter 1](#chapter-1)
   - [Chapter 2](#chapter-2)
@@ -22,7 +25,8 @@
   - [Chapter 9](#chapter-9)
     - [The Three Rules of TDD](#the-three-rules-of-tdd)
     - [Clean tests](#clean-tests)
-    - [F.I.R.S.T.](#first)
+    - [F.I.R.S.T](#first)
+  - [Chapter 10](#chapter-10)
 
 # Clean-code-my-own-journey
 
@@ -34,8 +38,12 @@ I read the book and carefully went through the case studies in the second part, 
 
 ## Sources
 
+### Books
+
 Software engineering principles, from Robert C. Martin's book
 [_Clean Code_](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)
+
+### Websites
 
 3 "ilities" of software architecturere from Ryan McDermott repository
 [3Rs of Software Architecture](https://github.com/ryanmcdermott/3rs-of-software-architecture)
@@ -46,6 +54,20 @@ Naming convention (programming) [naming-convention-programing](<https://en.wikip
 
 Clean Code: Formatting (Source code structure)
 [clean-code-formatting](https://medium.com/nerd-for-tech/clean-code-formatting-source-code-structure-f3021575d79)
+
+Clean code — Classes
+[Clean code — Classes](https://medium.com/javarevisited/clean-code-classes-dae3cb44eb90)
+
+JavaScript Classes – How They Work with Use Case Example
+[JavaScript Classes – How They Work with Use Case Example](https://www.freecodecamp.org/news/javascript-classes-how-they-work-with-use-case/)
+
+JavaScript Classes – How They Work with Use Case Example
+[JavaScript Classes – How They Work with Use Case Example](https://www.freecodecamp.org/news/javascript-classes-how-they-work-with-use-case/)
+
+### Videos
+
+Liskov: The Liskov Substitution Principle 
+[Liskov: The Liskov Substitution Principle](https://www.youtube.com/watch?v=-Z-17h3jG0A&t=184s)
 
 ## Introduction
 
@@ -739,9 +761,10 @@ Problems caused by factors outside the program’s control should usually be han
 
 ## Chapter 8
 
-Here the discussion is about the different ways to keep the boundaries of our code clean. Where Boundaries are the interfaces where diffferent parts of asystem interactL: external system libraries or databases. 
+Here the discussion is about the different ways to keep the boundaries of our code clean. Where Boundaries are the interfaces where diffferent parts of asystem interactL: external system libraries or databases.
 
 ### Using third party code
+
 We don't want to have third-party APIs referenced everywhere in our application because if the APIs change; you have to modify code everywhere it's referenced.
 The best way to get to know an api is writting test this allows you to:
 
@@ -781,8 +804,7 @@ Key principles for keeping tests clean include:
 3. Maintainability: Tests should be written with maintainability in mind, allowing for easy modifications and updates as the code evolves.
 4. Minimize Test Data: Tests should use minimal test data to focus on the essential behavior being tested.
 
-
-### F.I.R.S.T.
+### F.I.R.S.T
 
 Clean tests follow five rules that together form the above acronym:
 
@@ -791,3 +813,280 @@ Clean tests follow five rules that together form the above acronym:
 3. Repeatable: Tests should produce the same result every time they are run.
 4. Self-Validating: Tests should either pass or fail clearly, without human interpretation.
 5. Timely: Tests should be written before the production code and should be run frequently.
+
+## Chapter 10
+
+In Chapter 10, it's all about classes, what they are and how you should construct them. 
+> In object-oriented programming, a class is an extensible program-code-template for creating objects, providing initial values for state (member variables) and implementations of behavior (member functions or methods).
+>
+> — Wikipedia
+
+JavaScript still uses a prototype-based inheritance model. However, classes in JavaScript are a simpler way to implement OOP concepts on top of this model. The introduction of classes in JS has made it easier for developers to build software around OOP concepts. It has also brought in similarities to other OOP-based programming languages such as C++ and Java.
+
+It is emphasized that keeping classes clean and organized is crucial. To maintain clean classes, it is imperative to follow certain rules:
+
+1. The Single Responsibility Principle:
+   - Organize code for easy navigation and understanding.
+   - Utilize small, focused classes.
+   - Design classes to change for one reason only.
+   - Name classes according to their responsibility.
+   - Minimize collaboration between classes.
+  
+2. Cohesion: classes should have a small number of instance variables. Each of the methods of a class should manipulate one or more of those variables. In general the more variables a method manipulates the more cohesive that method is to its class. When cohesion is high, it means that the methods and variables of the class are codependent and hang tohether as a logical whole.
+
+3. Open-Closed Principle (OCP)
+
+>In object-oriented programming, the open–closed principle (OCP) states "software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification";[1] that is, such an entity can allow its behaviour to be extended without modifying its source code.
+>
+> Wikipedia
+
+The main idea of the open/closed principle is that every class,function,module or section of your code should be open for extension and closed for modification. This means that a class,function, or module should be able to be extended in functionality without having to go into the class and change it. Essentially you shouldn't need to change existing code to add new functionality and instead should only have to add new code.
+
+**Bad:**
+
+```javascript
+
+function printQuiz(questions) {
+  questions.forEach((question) => {
+    console.log(question.description);
+    switch (question.type) {
+      case "boolean":
+        console.log("1. true");
+        console.log("2. false");
+        break;
+      case "multipleChoice":
+        question.options.forEach((option, index) => {
+          console.log(`${index + 1}. ${option}`);
+        });
+        break;
+      case "text":
+        console.log(`Answer: _________________`);
+        break;
+      case "range":
+        console.log(`Minimum: _________________`);
+        console.log(`Maximum: _________________`);
+        break;
+    }
+    console.log("");
+  });
+}
+
+const questions = [
+  {
+    type: "boolean",
+    description: "Is JavaScript the coolest programming language in the world?",
+  },
+  {
+    type: "multipleChoise",
+    description: 'What is the best programming language in the world?"',
+    options: ["Javascript", "Python", "C++", "Java"],
+  },
+  {
+    type: "text",
+    description: "What is your favorite programming language?",
+  },
+  {
+    type: "range",
+    description: "How much do you like Javascript",
+  },
+];
+
+printQuiz(questions);
+
+
+```
+
+**Good:**
+
+```javascript
+class BooleanQuestion {
+  constructor(description) {
+    this.description = description;
+  }
+
+  printQuestionChoices() {
+    console.log("1. true");
+    console.log("2. false");
+  }
+}
+
+class MultipleChoiceQuestion {
+  constructor(description, options) {
+    this.description = description;
+    this.options = options;
+  }
+
+  printQuestionChoices() {
+    this.options.forEach((option, index) => {
+      console.log(`${index + 1}. ${option}`);
+    });
+  }
+}
+
+
+class TextQuestion {
+  constructor(description){
+    this.description = description;
+  }
+
+  printQuestionChoices() {
+    console.log("Answer: _____________");
+ 
+  }
+}
+
+class RangeQuestion {
+  constructor(description){
+    this.description = description;
+  }
+
+  printQuestionChoices() {
+    console.log("Minimum:: _____________");
+    console.log("maximum:: _____________");
+
+  }
+}
+
+function printQuiz(questions){
+  questions.forEach(question => {
+    console.log(question.description);
+    question.printQuestionChoices();
+    console.log('')
+  })
+}
+
+const questions = [
+  new BooleanQuestion("Is Javascript the coolest language in the world?"),
+  new MultipleChoiceQuestion("What is the best programming language in the world?", ["Javascript", "Python", "C++", "Java"]),
+  new TextQuestion("What is your favorite programming language?"),
+  new RangeQuestion("How much do you like Javascript?")
+]
+
+printQuiz(questions)
+
+```
+  
+4. Dependency Inversion Principle (DIP):
+
+>In object-oriented design, the dependency inversion principle is a specific methodology for loosely coupled software modules. When following this principle, the conventional dependency relationships established from high-level, policy-setting modules to low-level, dependency modules are reversed, thus rendering high-level modules independent of the low-level module implementation details.
+>
+> Wikipedia
+
+The Dependency Inversion principle states that our classes should depend upon interfaces or abstract classes instead of concrete classes and functions.
+
+Implementing the Dependency Inversion Principle in projects can yield several benefits:
+
+- Loose Coupling: By introducing abstractions, high-level modules are no longer directly dependent on low-level modules. This loose coupling allows for independent development, modification, and replacement of individual components.
+  
+- Testability: Abstractions make it easier to write unit tests by enabling the use of mock objects or test doubles. With dependencies abstracted away, I can isolate and test individual modules more effectively.
+- Maintainability: The DIP reduces the impact of changes in low-level modules on high-level modules. This modular structure makes it simpler to update or replace components without affecting the entire system, leading to improved maintainability.
+- Scalability: The use of abstractions allows for the addition of new implementations without modifying existing code. This scalability makes it easier to extend the system’s functionality while preserving the existing codebase.
+
+**Bad:**
+
+```javascript
+class Store {
+  constructor(user) {
+    this.paypal = new Paypal()
+    this.user = user
+    this.stripe = new Stripe(user)
+  }
+
+  purchaseBike(quantity) {
+    this.stripe.makePayment(200 * quantity * 100)
+    this.paypal.makePaymentP(this.user, 200 * quantity)
+
+  }
+
+  purchaseHelmet(quantity){
+    this.stripe.makePayment(15 * quantity * 100)
+    this.paypal.makePaymentP(this.user, 15 * quantity)
+
+  }
+}
+
+class Stripe {
+  constructor(user) {
+    this.user = user
+  }
+
+  makePayment(amountInCents){
+    console.log(`${this.user} made payment of $${amountInCents / 100} with Stripe`)
+  }
+}
+
+class Paypal {
+  makePaymentP(user, amountInDollars){
+  console.log(`${user} made payment of $${amountInDollars / 100} with Paypal`)
+}
+}
+
+const store = new Store('Jhon')
+store.purchaseBike(2)
+store.purchaseHelmet(2)
+```
+
+**Good:**
+
+```javascript
+class Store {
+  constructor(paymentProcessor) {
+    this.paymentProcessor = paymentProcessor;
+  }
+
+  purchaseBike(quantity) {
+    this.paymentProcessor.pay(200 * quantity);
+  }
+
+  purchaseHelmet(quantity) {
+    this.paymentProcessor.pay(15 * quantity);
+  }
+}
+
+class StripePaymentProcessor {
+  constructor(user) {
+    this.user = user;
+    this.stripe = new Stripe(user);
+  }
+
+  pay(amountInDollars) {
+    this.stripe.makePayment(amountInDollars * 100);
+  }
+}
+
+class Stripe {
+  constructor(user) {
+    this.user = user;
+  }
+
+  makePayment(amountInCents) {
+    console.log(
+      `${this.user} made payment of $${amountInCents / 100} with Stripe`,
+    );
+  }
+}
+
+class PaypalPaymentProcessor {
+  constructor(user) {
+    this.user = user;
+    this.paypal = new Paypal();
+  }
+
+  pay(amountInDollars) {
+    this.paypal.makePayment(this.user, amountInDollars);
+  }
+}
+class Paypal {
+  makePayment(user, amountInDollars) {
+    console.log(`${user} made payment of $${amountInDollars} with Paypal`);
+  }
+}
+
+const storeWithPayPal = new Store(new PaypalPaymentProcessor("Jhon"));
+storeWithPayPal.purchaseBike(2);
+storeWithPayPal.purchaseHelmet(2);
+
+const storeWithStripe = new Store(new StripePaymentProcessor("Jhon"));
+storeWithStripe.purchaseBike(2);
+storeWithStripe.purchaseHelmet(2);
+```
