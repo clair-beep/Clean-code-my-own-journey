@@ -27,6 +27,13 @@
     - [Clean tests](#clean-tests)
     - [F.I.R.S.T](#first)
   - [Chapter 10](#chapter-10)
+  - [Chapter 11](#chapter-11)
+    - [How to build a city?](#how-to-build-a-city)
+    - [Separation of Main](#separation-of-main)
+    - [Dependency injection](#dependency-injection)
+      - [Examples](#examples)
+    - [Scaling up](#scaling-up)
+    - [Cross-Cutting Concerns](#cross-cutting-concerns)
 
 # Clean-code-my-own-journey
 
@@ -66,7 +73,7 @@ JavaScript Classes – How They Work with Use Case Example
 
 ### Videos
 
-Liskov: The Liskov Substitution Principle 
+Liskov: The Liskov Substitution Principle
 [Liskov: The Liskov Substitution Principle](https://www.youtube.com/watch?v=-Z-17h3jG0A&t=184s)
 
 ## Introduction
@@ -785,7 +792,7 @@ In this chapter, we will be discussing the significance of unit testing in maint
 
 ### The Three Rules of TDD
 
-There are three rules that should be followed while using Test Driven Development (TDD): 
+There are three rules that should be followed while using Test Driven Development (TDD):
 
 1. Write production code only to pass a failing unit test.
 2. Write no more of a unit test than what is required to fail. Compilation failures are considered failures as well.
@@ -816,7 +823,8 @@ Clean tests follow five rules that together form the above acronym:
 
 ## Chapter 10
 
-In Chapter 10, it's all about classes, what they are and how you should construct them. 
+In Chapter 10, it's all about classes, what they are and how you should construct them.
+
 > In object-oriented programming, a class is an extensible program-code-template for creating objects, providing initial values for state (member variables) and implementations of behavior (member functions or methods).
 >
 > — Wikipedia
@@ -826,17 +834,18 @@ JavaScript still uses a prototype-based inheritance model. However, classes in J
 It is emphasized that keeping classes clean and organized is crucial. To maintain clean classes, it is imperative to follow certain rules:
 
 1. The Single Responsibility Principle:
+
    - Organize code for easy navigation and understanding.
    - Utilize small, focused classes.
    - Design classes to change for one reason only.
    - Name classes according to their responsibility.
    - Minimize collaboration between classes.
-  
+
 2. Cohesion: classes should have a small number of instance variables. Each of the methods of a class should manipulate one or more of those variables. In general the more variables a method manipulates the more cohesive that method is to its class. When cohesion is high, it means that the methods and variables of the class are codependent and hang tohether as a logical whole.
 
 3. Open-Closed Principle (OCP)
 
->In object-oriented programming, the open–closed principle (OCP) states "software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification";[1] that is, such an entity can allow its behaviour to be extended without modifying its source code.
+> In object-oriented programming, the open–closed principle (OCP) states "software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification";[1] that is, such an entity can allow its behaviour to be extended without modifying its source code.
 >
 > Wikipedia
 
@@ -845,55 +854,52 @@ The main idea of the open/closed principle is that every class,function,module o
 **Bad:**
 
 ```javascript
-
 function printQuiz(questions) {
   questions.forEach((question) => {
     console.log(question.description);
     switch (question.type) {
-      case "boolean":
-        console.log("1. true");
-        console.log("2. false");
+      case 'boolean':
+        console.log('1. true');
+        console.log('2. false');
         break;
-      case "multipleChoice":
+      case 'multipleChoice':
         question.options.forEach((option, index) => {
           console.log(`${index + 1}. ${option}`);
         });
         break;
-      case "text":
+      case 'text':
         console.log(`Answer: _________________`);
         break;
-      case "range":
+      case 'range':
         console.log(`Minimum: _________________`);
         console.log(`Maximum: _________________`);
         break;
     }
-    console.log("");
+    console.log('');
   });
 }
 
 const questions = [
   {
-    type: "boolean",
-    description: "Is JavaScript the coolest programming language in the world?",
+    type: 'boolean',
+    description: 'Is JavaScript the coolest programming language in the world?',
   },
   {
-    type: "multipleChoise",
+    type: 'multipleChoise',
     description: 'What is the best programming language in the world?"',
-    options: ["Javascript", "Python", "C++", "Java"],
+    options: ['Javascript', 'Python', 'C++', 'Java'],
   },
   {
-    type: "text",
-    description: "What is your favorite programming language?",
+    type: 'text',
+    description: 'What is your favorite programming language?',
   },
   {
-    type: "range",
-    description: "How much do you like Javascript",
+    type: 'range',
+    description: 'How much do you like Javascript',
   },
 ];
 
 printQuiz(questions);
-
-
 ```
 
 **Good:**
@@ -905,8 +911,8 @@ class BooleanQuestion {
   }
 
   printQuestionChoices() {
-    console.log("1. true");
-    console.log("2. false");
+    console.log('1. true');
+    console.log('2. false');
   }
 }
 
@@ -923,52 +929,51 @@ class MultipleChoiceQuestion {
   }
 }
 
-
 class TextQuestion {
-  constructor(description){
+  constructor(description) {
     this.description = description;
   }
 
   printQuestionChoices() {
-    console.log("Answer: _____________");
- 
+    console.log('Answer: _____________');
   }
 }
 
 class RangeQuestion {
-  constructor(description){
+  constructor(description) {
     this.description = description;
   }
 
   printQuestionChoices() {
-    console.log("Minimum:: _____________");
-    console.log("maximum:: _____________");
-
+    console.log('Minimum:: _____________');
+    console.log('maximum:: _____________');
   }
 }
 
-function printQuiz(questions){
-  questions.forEach(question => {
+function printQuiz(questions) {
+  questions.forEach((question) => {
     console.log(question.description);
     question.printQuestionChoices();
-    console.log('')
-  })
+    console.log('');
+  });
 }
 
 const questions = [
-  new BooleanQuestion("Is Javascript the coolest language in the world?"),
-  new MultipleChoiceQuestion("What is the best programming language in the world?", ["Javascript", "Python", "C++", "Java"]),
-  new TextQuestion("What is your favorite programming language?"),
-  new RangeQuestion("How much do you like Javascript?")
-]
+  new BooleanQuestion('Is Javascript the coolest language in the world?'),
+  new MultipleChoiceQuestion(
+    'What is the best programming language in the world?',
+    ['Javascript', 'Python', 'C++', 'Java'],
+  ),
+  new TextQuestion('What is your favorite programming language?'),
+  new RangeQuestion('How much do you like Javascript?'),
+];
 
-printQuiz(questions)
-
+printQuiz(questions);
 ```
-  
+
 4. Dependency Inversion Principle (DIP):
 
->In object-oriented design, the dependency inversion principle is a specific methodology for loosely coupled software modules. When following this principle, the conventional dependency relationships established from high-level, policy-setting modules to low-level, dependency modules are reversed, thus rendering high-level modules independent of the low-level module implementation details.
+> In object-oriented design, the dependency inversion principle is a specific methodology for loosely coupled software modules. When following this principle, the conventional dependency relationships established from high-level, policy-setting modules to low-level, dependency modules are reversed, thus rendering high-level modules independent of the low-level module implementation details.
 >
 > Wikipedia
 
@@ -977,7 +982,6 @@ The Dependency Inversion principle states that our classes should depend upon in
 Implementing the Dependency Inversion Principle in projects can yield several benefits:
 
 - Loose Coupling: By introducing abstractions, high-level modules are no longer directly dependent on low-level modules. This loose coupling allows for independent development, modification, and replacement of individual components.
-  
 - Testability: Abstractions make it easier to write unit tests by enabling the use of mock objects or test doubles. With dependencies abstracted away, I can isolate and test individual modules more effectively.
 - Maintainability: The DIP reduces the impact of changes in low-level modules on high-level modules. This modular structure makes it simpler to update or replace components without affecting the entire system, leading to improved maintainability.
 - Scalability: The use of abstractions allows for the addition of new implementations without modifying existing code. This scalability makes it easier to extend the system’s functionality while preserving the existing codebase.
@@ -987,43 +991,45 @@ Implementing the Dependency Inversion Principle in projects can yield several be
 ```javascript
 class Store {
   constructor(user) {
-    this.paypal = new Paypal()
-    this.user = user
-    this.stripe = new Stripe(user)
+    this.paypal = new Paypal();
+    this.user = user;
+    this.stripe = new Stripe(user);
   }
 
   purchaseBike(quantity) {
-    this.stripe.makePayment(200 * quantity * 100)
-    this.paypal.makePaymentP(this.user, 200 * quantity)
-
+    this.stripe.makePayment(200 * quantity * 100);
+    this.paypal.makePaymentP(this.user, 200 * quantity);
   }
 
-  purchaseHelmet(quantity){
-    this.stripe.makePayment(15 * quantity * 100)
-    this.paypal.makePaymentP(this.user, 15 * quantity)
-
+  purchaseHelmet(quantity) {
+    this.stripe.makePayment(15 * quantity * 100);
+    this.paypal.makePaymentP(this.user, 15 * quantity);
   }
 }
 
 class Stripe {
   constructor(user) {
-    this.user = user
+    this.user = user;
   }
 
-  makePayment(amountInCents){
-    console.log(`${this.user} made payment of $${amountInCents / 100} with Stripe`)
+  makePayment(amountInCents) {
+    console.log(
+      `${this.user} made payment of $${amountInCents / 100} with Stripe`,
+    );
   }
 }
 
 class Paypal {
-  makePaymentP(user, amountInDollars){
-  console.log(`${user} made payment of $${amountInDollars / 100} with Paypal`)
-}
+  makePaymentP(user, amountInDollars) {
+    console.log(
+      `${user} made payment of $${amountInDollars / 100} with Paypal`,
+    );
+  }
 }
 
-const store = new Store('Jhon')
-store.purchaseBike(2)
-store.purchaseHelmet(2)
+const store = new Store('Jhon');
+store.purchaseBike(2);
+store.purchaseHelmet(2);
 ```
 
 **Good:**
@@ -1082,11 +1088,95 @@ class Paypal {
   }
 }
 
-const storeWithPayPal = new Store(new PaypalPaymentProcessor("Jhon"));
+const storeWithPayPal = new Store(new PaypalPaymentProcessor('Jhon'));
 storeWithPayPal.purchaseBike(2);
 storeWithPayPal.purchaseHelmet(2);
 
-const storeWithStripe = new Store(new StripePaymentProcessor("Jhon"));
+const storeWithStripe = new Store(new StripePaymentProcessor('Jhon'));
 storeWithStripe.purchaseBike(2);
 storeWithStripe.purchaseHelmet(2);
 ```
+
+## Chapter 11
+
+### How to build a city?
+
+> In object-oriented programming, a class is an extensible program-code-template for creating objects, providing initial values for state (member variables) and implementations of behavior (member functions or methods).
+>
+> — Clean Code
+
+When building a city, teamwork is essential, and roles must be clearly defined. The same applies to software development.
+
+You should separate the construction of your objects to the actual use of it.
+
+> Software systems should separate the startup process, when the application objects are constructed and the dependencies are “wired” together, from the runtime logic that takes over after startup.
+
+### Separation of Main
+
+One way to separate construction from use:
+
+- Move all aspects of constructions to a main module
+- App does not know how construction takes place
+- Decoupling from the objects
+
+### Dependency injection
+
+- Inversion of Control
+  - Moving secondary responsibilities from an object to other objects that are dedicated to the purpose
+    - Other components will provide the dependencies that a class will use
+    - Dependency inyection is an implementation of Inversion of Control
+- Providing setter methods or constructor arguments to initiate dependencies
+  - The Dependency Injection instantiates the objects
+  - Dependencies are wired together
+
+#### Examples
+
+**Angular Js**
+
+The following example shows an AngularJS component receiving a greeting service through dependency injection.
+
+```javascript
+function SomeClass(greeter) {
+  this.greeter = greeter;
+}
+
+SomeClass.prototype.doSomething = function (name) {
+  this.greeter.greet(name);
+};
+```
+
+Each AngularJS application contains a service locator responsible for the construction and look-up of dependencies.
+
+```javascript
+// Provide the wiring information in a module
+var myModule = angular.module('myModule', []);
+
+// Teach the injector how to build a greeter service.
+// greeter is dependent on the $window service.
+myModule.factory('greeter', function ($window) {
+  return {
+    greet: function (text) {
+      $window.alert(text);
+    },
+  };
+});
+```
+
+We can then create a new injector that provides components defined in the myModule module, including the greeter service.
+
+```javascript
+var injector = angular.injector(['myModule', 'ng']);
+var greeter = injector.get('greeter');
+```
+
+### Scaling up
+
+> It is a mith that we can get systems "right the first time" Instead, we should implement only today's stories, then refactor
+
+If your system is built correctly, it will be able to expand. So, instead of obsessing over the details, allow for system changes. System architecture can grow if we maintain an environment where one component doesn't rely on another, and things are not tightly coupled. This will allow small towns to grow into large cities.
+
+### Cross-Cutting Concerns
+
+In Clean Architecture, it is crucial to address cross-cutting concerns to ensure the maintainability and scalability of your system. These concerns should ideally be handled separately from the core business logic, aligning with Clean Architecture's principles that emphasize the decoupling of concerns and modularity. This approach keeps the core business rules uncluttered and the architecture adaptable.
+
+The ideal placement for implementing cross-cutting concerns is in the Infrastructure layer. You can utilize middleware, decorators, or pipeline behaviors within the context of Express. Regardless of the chosen approach, the underlying concept remains consistent.
