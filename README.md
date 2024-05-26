@@ -34,6 +34,9 @@
       - [Examples](#examples)
     - [Scaling up](#scaling-up)
     - [Cross-Cutting Concerns](#cross-cutting-concerns)
+    - [Optimize Decision Making](#optimize-decision-making)
+    - [Conclusion](#conclusion)
+  - [Chapter 12](#chapter-12)
 
 # Clean-code-my-own-journey
 
@@ -75,6 +78,9 @@ JavaScript Classes – How They Work with Use Case Example
 
 Liskov: The Liskov Substitution Principle
 [Liskov: The Liskov Substitution Principle](https://www.youtube.com/watch?v=-Z-17h3jG0A&t=184s)
+
+Clean Code: Chapter 11 (Systems)
+[Clean Code: Chapter 11 (Systems)](https://www.youtube.com/watch?v=8YzAhfBeF1k)
 
 ## Introduction
 
@@ -1110,6 +1116,8 @@ When building a city, teamwork is essential, and roles must be clearly defined. 
 You should separate the construction of your objects to the actual use of it.
 
 > Software systems should separate the startup process, when the application objects are constructed and the dependencies are “wired” together, from the runtime logic that takes over after startup.
+>
+> — Clean Code
 
 ### Separation of Main
 
@@ -1172,6 +1180,8 @@ var greeter = injector.get('greeter');
 ### Scaling up
 
 > It is a mith that we can get systems "right the first time" Instead, we should implement only today's stories, then refactor
+>
+> — Clean Code
 
 If your system is built correctly, it will be able to expand. So, instead of obsessing over the details, allow for system changes. System architecture can grow if we maintain an environment where one component doesn't rely on another, and things are not tightly coupled. This will allow small towns to grow into large cities.
 
@@ -1179,4 +1189,54 @@ If your system is built correctly, it will be able to expand. So, instead of obs
 
 In Clean Architecture, it is crucial to address cross-cutting concerns to ensure the maintainability and scalability of your system. These concerns should ideally be handled separately from the core business logic, aligning with Clean Architecture's principles that emphasize the decoupling of concerns and modularity. This approach keeps the core business rules uncluttered and the architecture adaptable.
 
-The ideal placement for implementing cross-cutting concerns is in the Infrastructure layer. You can utilize middleware, decorators, or pipeline behaviors within the context of Express. Regardless of the chosen approach, the underlying concept remains consistent.
+The ideal placement for implementing cross-cutting concerns is in the Infrastructure layer. You can utilize middleware, decorators, or pipeline behaviors within the context of Nestjs. Regardless of the chosen approach, the underlying concept remains consistent.
+
+### Optimize Decision Making
+
+By refining how decisions are made and who makes them, organizations can significantly improve their outcomes and adaptability. The main points to consider are:
+
+- Give responsibilities to the most qualified
+- Postpone decisions until the last possible moment
+- Objects (POJOs) allow for just-in-time decisions because of modularity
+- Use standards wisely, when they add demonstrable value
+- Systems need domain-specific languages
+
+### Conclusion
+
+> Systems must be clean too. An invasive architecture overwhelms the domain logic and impacts agility. When the domain logic is obscured, quality suffers because bugs find it easier to hide and stories become harder to implement. If agility is compromised, productivity suffers and the benefits of TDD are lost.
+>
+> — Clean Code
+
+## Chapter 12
+
+In this chapter we discuss the concept of 'emergence'.
+
+> In philosophy, systems theory, science, and art, emergence occurs when a complex entity has properties or behaviors that its parts do not have on their own, and emerge only when they interact in a wider whole.
+>
+> — Wikipedia
+
+Kent Beck came up with his four rules of simple design while he was developing ExtremeProgramming in the late 1990's. I would list them, and explain them briefly:
+
+1. Passes the tests:
+
+- Ensuring that the code passes all tests is the first and most essential rule. This includes unit tests, integration tests, etc. Passing tests guarantee that the code behaves as expected and meets the specified requirements.
+
+2. Reveals intention:
+
+- The code should clearly express its purpose. Anyone reading the code should understand what it does and why it does it without needing extensive comments.
+
+3. No duplication:
+
+- Duplicated code indicates poor design. It leads to maintenance problems because changes must be made in multiple places. Removing duplication (DRY principle - Don't Repeat Yourself) helps in making the code more maintainable and understandable.
+
+4. Fewest elements:
+
+- The design should be as simple as possible. This doesn't mean fewer lines of code, but rather avoiding unnecessary complexity. Having fewer classes and methods can make the codebase easier to navigate and understand, though it should not come at the cost of violating the other principles.
+
+![alt text](image.png)
+
+These rules is that they are very simple to remember, yet following them improves code in any language or programming paradigm without a doubt. They are an example of Kent's skill in finding principles that are generally applicable and yet concrete enough.
+
+> At the time there was a lot of “design is subjective”, “design is a matter of taste” bullshit going around. I disagreed. There are better and worse designs. These criteria aren’t perfect, but they serve to sort out some of the obvious crap and (importantly) you can evaluate them right now. The real criteria for quality of design, “minimizes cost (including the cost of delay) and maximizes benefit over the lifetime of the software,” can only be evaluated post hoc, and even then any evaluation will be subject to a large bag full of cognitive biases. The four rules are generally predictive.
+>
+> — Kent Beck
