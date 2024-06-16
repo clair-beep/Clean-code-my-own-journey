@@ -57,6 +57,8 @@ I read the book and carefully went through the case studies in the second part, 
 
 ### Books
 
+Node.js Design Patterns from Mario Casciaro and Luciano Mammino
+[Node.js Design Patterns](https://www.amazon.de/-/en/Mario-Casciaro/dp/1839214112)
 Software engineering principles, from Robert C. Martin's book
 [_Clean Code_](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)
 
@@ -82,6 +84,8 @@ Beck Design Rules
 [Beck Design Rules](https://www.martinfowler.com/bliki/BeckDesignRules.html)
 
 Worker Threads: Multitasking in NodeJS [Worker Threads: Multitasking in NodeJS](https://medium.com/@manikmudholkar831995/worker-threads-multitasking-in-nodejs-6028cdf35e9d)
+
+Node.js Worker Threads Vs. Child Processes: Which one should you use? [Node.js Worker Threads Vs. Child Processes: Which one should you use?](https://amplication.com/blog/nodejs-worker-threads-vs-child-processes-which-one-should-you-use?source=post_page-----6ecdbc533e1f--------------------------------)
 
 ### Videos
 
@@ -1373,3 +1377,7 @@ if (isMainThread) {
   );
 }
 ```
+
+The snippet above showcases an ideal scenario in which you can utilize worker threads. To build a worker thread, you'll need to import Worker, IsMainThread, parentPort, andworkerData from the worker_threads library. These definitions will be used to create the worker thread.
+
+This algorithm finds all the prime numbers in a given range. It splits the range into different parts (five parts in the example above) in the main thread and then creates a Worker Thread using the new Worker() to handle each part. The worker thread executes the else block, which finds the prime numbers in the range assigned to that worker thread, and finally sends the result back to the parent (main) thread by using parentPort.postMessage().
