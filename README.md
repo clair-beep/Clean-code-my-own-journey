@@ -37,6 +37,13 @@
     - [Optimize Decision Making](#optimize-decision-making)
     - [Conclusion](#conclusion)
   - [Chapter 12](#chapter-12)
+  - [Chapter 13](#chapter-13)
+    - [What is concurrency](#what-is-concurrency)
+    - [Concurrency and Throughput](#concurrency-and-throughput)
+    - [Using worker threads](#using-worker-threads)
+    - [What are the benefits of using Worker Threads in Node.js?](#what-are-the-benefits-of-using-worker-threads-in-nodejs)
+    - [When should you use Worker Threads in Node.js?](#when-should-you-use-worker-threads-in-nodejs)
+    - [Example](#example)
 
 # Clean-code-my-own-journey
 
@@ -71,8 +78,10 @@ Clean code — Classes
 JavaScript Classes – How They Work with Use Case Example
 [JavaScript Classes – How They Work with Use Case Example](https://www.freecodecamp.org/news/javascript-classes-how-they-work-with-use-case/)
 
-JavaScript Classes – How They Work with Use Case Example
-[JavaScript Classes – How They Work with Use Case Example](https://www.freecodecamp.org/news/javascript-classes-how-they-work-with-use-case/)
+Beck Design Rules
+[Beck Design Rules](https://www.martinfowler.com/bliki/BeckDesignRules.html)
+
+Worker Threads: Multitasking in NodeJS [Worker Threads: Multitasking in NodeJS](https://medium.com/@manikmudholkar831995/worker-threads-multitasking-in-nodejs-6028cdf35e9d)
 
 ### Videos
 
@@ -81,6 +90,8 @@ Liskov: The Liskov Substitution Principle
 
 Clean Code: Chapter 11 (Systems)
 [Clean Code: Chapter 11 (Systems)](https://www.youtube.com/watch?v=8YzAhfBeF1k)
+
+Clean Code: Chapter 13 (Part 1: Concurrency) [Clean Code: Chapter 13 (Part 1: Concurrency)](https://www.youtube.com/watch?v=f99zSz5D5RE)
 
 ## Introduction
 
@@ -1240,3 +1251,125 @@ These rules is that they are very simple to remember, yet following them improve
 > At the time there was a lot of “design is subjective”, “design is a matter of taste” bullshit going around. I disagreed. There are better and worse designs. These criteria aren’t perfect, but they serve to sort out some of the obvious crap and (importantly) you can evaluate them right now. The real criteria for quality of design, “minimizes cost (including the cost of delay) and maximizes benefit over the lifetime of the software,” can only be evaluated post hoc, and even then any evaluation will be subject to a large bag full of cognitive biases. The four rules are generally predictive.
 >
 > — Kent Beck
+
+## Chapter 13
+
+In previous chapters, my summaries have closely adhered to the content and context provided in "Clean Code," focusing on the core principles and best practices outlined by Robert C. Martin. However, Chapter 13, which delves into concurrency, presents concepts that are deeply technical and highly specific to Java. Given the technical nature of this chapter, I've chosen to explore these ideas through the lens of Node.js, a platform with which I have more practical experience. This approach allows me to relate the concurrency principles discussed in the book to my own understanding and usage of Node.js, providing a more personal and meaningful reflection on the material rather than an authoritative guide on the subject.
+
+> Concurrency is a decoupling strategy. It help us decouple what gets done from when it gets done.
+>
+> — Clean Code
+>
+> Concurrency is about dealing with lots of things at once. Parallelism is about doing lots of things at once.
+>
+> — Rob Pike
+
+### What is concurrency
+
+Concurrency allows for multiple computations to happen at the same time. It is used to describe the idea of performing multiple tasks at once. It should not be confused with parallelism.
+
+Concurrency refers to performing different tasks simultaneously with differing goals, while parallelism pertains to various parts of the program executing one task simultaneously.
+
+- Parallelism is a type of computation used to make programs run faster. In this programming approach, tasks or operations are executed in parallel. Programs are split into tasks and performed simultaneously to achieve the same goal.
+- Multi-threading is a programming technique in which two or more instructions are executed independently while sharing the same resource. NodeJS is, by design, not a multi-threaded language, but with the use of modern-day web workers, via worker_threads module.
+
+![alt text](image-1.png)
+
+### Concurrency and Throughput
+
+JavaScript execution in Node.js is single threaded, so concurrency refers to the event loop's capacity to execute JavaScript callback functions after completing other work. Any code that is expected to run in a concurrent manner must allow the event loop to continue running as non-JavaScript operations, like I/O, are occurring.
+
+As an example, let's consider a case where each request to a web server takes 50ms to complete and 45ms of that 50ms is database I/O that can be done asynchronously. Choosing non-blocking asynchronous operations frees up that 45ms per request to handle other requests. This is a significant difference in capacity just by choosing to use non-blocking methods instead of blocking methods.
+
+The event loop is different than models in many other languages where additional threads may be created to handle concurrent work.
+
+> In NodeJS the I/O operations are handled separately and when they are finished, the event loop adds the callback associated with the I/O task in a microtask queue. When the call stack in the main thread is clear, the callback is pushed on the call stack and then it executes. To make this clear, the callback associated with the given I/O task does not execute in parallel; however, the task itself of reading a file or a network request happens in parallel with the help of the threads. Once the I/O task finishes, the callback runs in the main thread.
+
+### Using worker threads
+
+Since Node 10.5.0, a new mechanism called worker threads allows us to run CPU-intensive algorithms outside the main event loop. Worker threads offer a lightweight alternative to child_process.fork(), with additional benefits. They have a smaller memory footprint and faster startup time because they operate within the main process, though in separate threads. Despite being based on real threads, worker threads in Node.js don't support the deep synchronization and variable-sharing capabilities found in languages like Java or Python. This limitation is due to JavaScript's single-threaded nature, which lacks built-in mechanisms for synchronizing access to variables across multiple threads. To incorporate the advantages of threading without altering the language itself, Node.js uses worker threads.
+
+Worker threads are essentially threads that, by default, don't share anything with the
+main application thread; they run within their own V8 instance, with an independent
+Node.js runtime and event loop. Communication with the main thread is possible
+thanks to message-based communication channels, the transfer of ArrayBuffer
+objects, and the use of SharedArrayBuffer objects whose synchronization is managed
+by the user (usually with the help of Atomics).
+
+This extensive level of isolation of worker threads from the main thread preserves
+the integrity of the language. At the same time, the basic communication facilities
+and data-sharing capabilities are more than enough for 99% of use cases.
+
+### What are the benefits of using Worker Threads in Node.js?
+
+As you can see, using worker threads can be very beneficial for CPU-intensive applications. In fact, it has several advantages:
+
+1. Improved performance: You can offshore compute heavy operations to worker threads, and this can free up the primary thread, which lets your app be responsive to serve more requests.
+
+2. Improve parallelism: If you have a large process that you would like to chunk into subtasks and execute in parallel, you can use worker threads to do so. For example, if you were determining if 1,999,3241,123 was a prime number, you could use worker threads to check for divisors in a range - (1 to 100,000 in WT1, 100,001 to 200,000 in WT2, etc). This would speed up your algorithm and would result in faster responses.
+
+### When should you use Worker Threads in Node.js?
+
+If you think about it, Worker Threads should only be used for compute-heavy operations that need to run independently from the parent thread.
+
+Using Worker Threads for I/O operations is unnecessary since these tasks are already managed by the event loop. Therefore, reserve Worker Threads for situations where you have a compute-heavy task that requires an isolated execution environment.
+
+### Example
+
+```javascript
+const {
+  Worker,
+  isMainThread,
+  parentPort,
+  workerData,
+} = require('worker_threads');
+
+const { generatePrimes } = require('./prime');
+
+const threads = new Set();
+const number = 999999;
+
+const breakIntoParts = (number, threadCount = 1) => {
+  const parts = [];
+  const chunkSize = Math.ceil(number / threadCount);
+
+  for (let i = 0; i < number; i += chunkSize) {
+    const end = Math.min(i + chunkSize, number);
+    parts.push({ start: i, end });
+  }
+
+  return parts;
+};
+
+if (isMainThread) {
+  const parts = breakIntoParts(number, 5);
+  parts.forEach((part) => {
+    threads.add(
+      new Worker(__filename, {
+        workerData: {
+          start: part.start,
+          end: part.end,
+        },
+      }),
+    );
+  });
+
+  threads.forEach((thread) => {
+    thread.on('error', (err) => {
+      throw err;
+    });
+    thread.on('exit', () => {
+      threads.delete(thread);
+      console.log(`Thread exiting, ${threads.size} running...`);
+    });
+    thread.on('message', (msg) => {
+      console.log(msg);
+    });
+  });
+} else {
+  const primes = generatePrimes(workerData.start, workerData.end);
+  parentPort.postMessage(
+    `Primes from - ${workerData.start} to ${workerData.end}: ${primes}`,
+  );
+}
+```
