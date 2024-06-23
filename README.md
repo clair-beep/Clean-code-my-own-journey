@@ -44,6 +44,7 @@
     - [What are the benefits of using Worker Threads in Node.js?](#what-are-the-benefits-of-using-worker-threads-in-nodejs)
     - [When should you use Worker Threads in Node.js?](#when-should-you-use-worker-threads-in-nodejs)
     - [Example](#example)
+  - [Chapter 14](#chapter-14)
 
 # Clean-code-my-own-journey
 
@@ -1381,3 +1382,20 @@ if (isMainThread) {
 The snippet above showcases an ideal scenario in which you can utilize worker threads. To build a worker thread, you'll need to import Worker, IsMainThread, parentPort, andworkerData from the worker_threads library. These definitions will be used to create the worker thread.
 
 This algorithm finds all the prime numbers in a given range. It splits the range into different parts (five parts in the example above) in the main thread and then creates a Worker Thread using the new Worker() to handle each part. The worker thread executes the else block, which finds the prime numbers in the range assigned to that worker thread, and finally sends the result back to the parent (main) thread by using parentPort.postMessage().
+
+## Chapter 14
+
+This section presents an overview of the concept of successive refinement, which involves systematically enhancing code by iteratively refining it. The chapter primarily focuses on the development process of a utility named 'args' that is responsible for parsing command-line arguments.
+
+Furthermore, the passage guides readers through the final module, emphasizing the significance of factors such as naming, function size, and code formatting.
+
+The initial draft is then introduced, highlighting the disparities between the first and last versions.
+
+> I did not simply write this program from beginning to end in its current form. More importantly, I am not expecting you to be able to write clean and elegant programs in one pass. If we have learned anything over the last couple of decades, it is that programming is a craft more than it is a science. To write clean code, you must ﬁrst write dirty code and then clean it.
+> This should not be a surprise to you. We learned this truth in grade school when our teachers tried (usually in vain) to get us to write rough drafts of our compositions. The process, they told us, was that we should write a rough draft, then a second draft, then sev- eral subsequent drafts until we had our ﬁnal version. Writing clean compositions, they tried to tell us, is a matter of successive reﬁnement.
+>
+> — Clean Code
+
+As well as the importance of adhering to Test-Driven Development (TDD) principles while making changes.
+
+Finally, the chapter wraps up by summarizing the essential points and insights gained from the iterative refinement process, emphasizing the significance of commencing with a rough draft, continually enhancing it, and thoroughly documenting modifications to achieve high-quality, well-organized code.
