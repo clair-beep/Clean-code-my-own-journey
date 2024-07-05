@@ -45,6 +45,13 @@
     - [When should you use Worker Threads in Node.js?](#when-should-you-use-worker-threads-in-nodejs)
     - [Example](#example)
   - [Chapter 14](#chapter-14)
+  - [Chapter 17](#chapter-17)
+    - [Comments](#comments)
+    - [Environment](#environment)
+    - [Functions](#functions)
+    - [General](#general)
+    - [Names](#names)
+    - [Test](#test)
 
 # Clean-code-my-own-journey
 
@@ -1399,3 +1406,90 @@ The initial draft is then introduced, highlighting the disparities between the f
 As well as the importance of adhering to Test-Driven Development (TDD) principles while making changes.
 
 Finally, the chapter wraps up by summarizing the essential points and insights gained from the iterative refinement process, emphasizing the significance of commencing with a rough draft, continually enhancing it, and thoroughly documenting modifications to achieve high-quality, well-organized code.
+
+## Chapter 17
+
+In this chapter, Martin Fowler lists many factors that can make a code smelly. I will simply turn this chapter into a checklist for my brain to go through each element, like many other chapters in this book. This is a selfish attempt for me to get the most out of it.
+
+> This list is meant to be read from top to bottom and also to be used as a reference.
+
+### Comments
+
+- Inappropriate Information
+- Obsolete Comment
+- Redundant Comment
+- Poorly Written Comment
+- Commented-Out Code
+
+### Environment
+
+- Build Requires More Than One Step
+- Tests Require More Than One Step
+
+### Functions
+
+- Too Many Arguments
+- Output Arguments
+- Flag Arguments
+- Dead Function
+
+### General
+
+- Multiple Languages in One Source File
+- Obvious Behavior Is Unimplemented
+- Incorrect Behavior at the Boundaries
+- Overridden Safeties
+- Duplication
+- Code at Wrong Level of Abstraction
+- Base Classes Depending on Their Derivatives
+- Too Much Information
+- Dead Code
+- Vertical Separation
+- Inconsistency
+- Clutter
+- Artiﬁcial Coupling
+- Feature Envy
+- Selector Arguments
+- Obscured Intent
+- Misplaced Responsibility
+- Inappropriate Static
+- Use Explanatory Variables
+- Function Names Should Say What They Do
+- Understand the Algorithm
+- Make Logical Dependencies Physical
+- Prefer Polymorphism to If/Else or Switch/Case
+- Follow Standard Conventions
+- Replace Magic Numbers with Named Constants
+- Be Precise
+- Structure over Convention
+- Encapsulate Conditionals
+- Avoid Negative Conditionals
+- Functions Should Do One Thing
+- Hidden Temporal Couplings
+- Don’t Be Arbitrary
+- Encapsulate Boundary Conditions
+- Functions Should Descend Only One Level of Abstraction
+- Keep Conﬁgurable Data at High Levels
+- Avoid Transitive Navigation
+
+### Names
+
+- Choose Descriptive Names
+- Choose Names at the Appropriate Level of Abstraction
+- Use Standard Nomenclature Where Possible
+- Unambiguous Names
+- Use Long Names for Long Scopes
+- Avoid Encodings
+- Names Should Describe Side-Effects
+
+### Test
+
+- Insufﬁcient Tests
+- Use a Coverage Tool!
+- Don’t Skip Trivial Tests
+- An Ignored Test Is a Question about an Ambiguity
+- Test Boundary Conditions
+- Exhaustively Test Near Bugs
+- Patterns of Failure Are Revealing
+- Test Coverage Patterns Can Be Revealing
+- Tests Should Be Fast
